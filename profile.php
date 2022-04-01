@@ -1,3 +1,11 @@
+<?php
+    session_start();
+    if(!isset($_SESSION['loginedUsername'])) header("Location: login.php");
+    include("config.php");
+    $str_query = "select * from sl2_registration_data where username ='".$_SESSION['loginedUsername']."'"; 
+    $query = mysqli_query($connection, $str_query);
+    $row = mysqli_fetch_array($query);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,12 +73,12 @@
         display: flex;
         align-items: center;
     }
-    .column div:nth-child(1),.column div:nth-child(2){
+    .column div:nth-child(1),.column div:nth-child(2),
+    .column:nth-child(1) div:nth-child(3), .column:nth-child(1) div:nth-child(4),
+    .column:nth-child(2) div:nth-child(3), .column:nth-child(2) div:nth-child(4),
+    .column:nth-child(3) div:nth-child(3){
         margin-bottom: 10px;
-    }
-    .column div:nth-child(3), .column div:nth-child(4){
-        margin-bottom: 25px;
-    }
+    } 
     .column p{
         width: 150px;
     }
@@ -85,16 +93,29 @@
     }
     h3{
         font-size: 24px;
+        padding-top: 10px;
+        margin: 0px;
     }
     .photo{
         display: flex;
         flex: column;
     }
     #fotoProfil{
-        margin-top: -33px;
         margin-left: 150px;
-        height: 130px;
-        margin-bottom: 16px;
+        height: 100px;
+        margin-bottom: 10px;
+    }
+    .title{
+        margin-top: -10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .title a{
+        font-size: 34px;
+        cursor: pointer;
+        color: green;
     }
 </style>
 <body>
@@ -107,76 +128,92 @@
         </div>
         <div class="menus">
             <div class="home">
-                <a href="home.php" id="menu">Home</a>
+                <a href="
+                    <?php
+                        echo "home.php?username=".$_SESSION['loginedUsername']."";
+                    ?>
+                " id="menu">Home</a>
             </div>
             <div class="profile">
-                <a href="profile.php" id="menu"><u>Profile</u></a>
+                <a href="
+                    <?php
+                        echo "profile.php?username=".$_SESSION['loginedUsername']."";
+                    ?>
+                " id="menu"><u>Profile</u></a>
             </div>
         </div>
         <div class="logout">
             <a href="logout.php" id="logout">Logout</a>
         </div>
     </div>
-    <?php
-        echo "<h3 align=center>Profil Pribadi</h3>";
-        session_start();
-    ?>
-    <div class="profile">
+    <div class="title">
+        <?php
+            echo "<h3 align=center>Profil Pribadi</h3>";
+        ?>
+        <div>
+            <a href="
+                <?php
+                    echo "editProfile.php?username=".$_SESSION['loginedUsername']."";
+                ?>
+            ">&nbsp&#9998;</a>
+        </div>
+    </div>
+    <div class="profiles">
         <div class="columns">
             <div class="column">
                 <div>
                     <p>Nama Depan</p>
-                    <p id="shortInput"><?php echo "<b>".$_SESSION['namaDepanRegister']."</b>";?></p>
+                    <p id="shortInput"><?php echo "<b>".$row['nama_depan']."</b>";?></p>
                 </div>
                 <div>
                     <p>Tempat Lahir</p>
-                    <p id="shortInput"><?php echo "<b>".$_SESSION['tempatLahirRegister']."</b>";?></p>
+                    <p id="shortInput"><?php echo "<b>".$row['tempat_lahir']."</b>";?></p>
                 </div>
                 <div>
                     <p>Warga Negara</p>
-                    <p id="shortInput"><?php echo "<b>".$_SESSION['wargaNegaraRegister']."</b>";?></p>
+                    <p id="shortInput"><?php echo "<b>".$row['warga_negara']."</b>";?></p>
                 </div>
                 <div>
                     <p>Alamat</p>         
-                    <p><?php echo "<b>".$_SESSION['alamatRegister']."</b>";?></p>
+                    <p><?php echo "<b>".$row['alamat']."</b>";?></p>
                 </div>
             </div>
             <div class="column">
                 <div>
                     <p>Nama Tengah</p>
-                    <p id="shortInput"><?php echo "<b>".$_SESSION['namaTengahRegister']."</b>";?></p>
+                    <p id="shortInput"><?php echo "<b>".$row['nama_tengah']."</b>";?></p>
                 </div>
                 <div>
                     <p>Tanggal Lahir</p>
-                    <p id="shortInput"><?php echo "<b>".date('d-m-Y',strtotime($_SESSION['tanggalLahirRegister']))."</b>";?></p>
+                    <p id="shortInput"><?php echo "<b>".date('d-m-Y',strtotime($row['tanggal_lahir']))."</b>";?></p>
                 </div>
                 <div>
                     <p>Email</p>
-                    <p id="shortInput"><?php echo "<b>".$_SESSION['emailRegister']."</b>";?></p>
+                    <p id="shortInput"><?php echo "<b>".$row['email']."</b>";?></p>
                 </div>
                 <div>
                     <p>Kode Pos</p>         
-                    <p id="shortInput"><?php echo "<b>".$_SESSION['kodePosRegister']."</b>";?></p>
+                    <p id="shortInput"><?php echo "<b>".$row['kode_pos']."</b>";?></p>
                 </div>
             </div>
             <div class="column">
                 <div>
                     <p>Nama Belakang</p>
-                    <p id="shortInput"><?php echo "<b>".$_SESSION['namaBelakangRegister']."</b>";?></p>
+                    <p id="shortInput"><?php echo "<b>".$row['nama_belakang']."</b>";?></p>
                 </div>
                 <div>
                     <p>NIK</p>
-                    <p id="shortInput"><?php echo "<b>".$_SESSION['NIKRegister']."</b>";?></p>
+                    <p id="shortInput"><?php echo "<b>".$row['nik']."</b>";?></p>
                 </div>
                 <div>
                     <p>No HP</p>
-                    <p id="shortInput"><?php echo "<b>".$_SESSION['noHPRegister']."</b>";?></p>
+                    <p id="shortInput"><?php echo "<b>".$row['no_hp']."</b>";?></p>
                 </div>
                 <div>
                     <p>Foto Profil</p>       
-                    <p id="shortInput"><?php echo "<a href='".$_SESSION['folderUpload'].$_SESSION['namaFileFoto']."' target='blank'>".$_SESSION['namaFileFoto']."</a>";?></p>
+                    <p id="shortInput"><?php echo "<a href='fotoProfil/".$row['nama_foto_profil']."' target='blank'>".$row['nama_foto_profil']."</a>";?></p>
                 </div>
-                <img src="<?php echo $_SESSION['folderUpload'].$_SESSION['namaFileFoto']; ?>" id="fotoProfil">
+                <img src="fotoProfil/<?php echo $row['nama_foto_profil']; ?>" id="fotoProfil">
             </div>
         </div>
     </div>

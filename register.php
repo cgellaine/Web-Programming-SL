@@ -109,6 +109,10 @@
     #registForm{
         margin-left: 35px;
     }
+    .errorMsg{
+        text-align: center;
+        color: red;
+    }
 </style>
 <body>
     <?php
@@ -187,11 +191,12 @@
         </div>
         <div class="bottom">
             <a href="welcome.php"><p id="kembali">Kembali</p></a>
-            <button name="register" id="register" onclick="validate()">Register</button>
+            <button name="register" id="register">Register</button>
         </div>
     </form>
     <div class="errorMsg">
         <?= isset($_SESSION['registerError']) ? $_SESSION['registerError'] : '';?>
+        <?= isset($_SESSION['savingError']) ? $_SESSION['savingError'] : '';?>
     </div>
 </body>
 </html>

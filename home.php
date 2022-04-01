@@ -1,3 +1,11 @@
+<?php
+    session_start();
+    if(!isset($_SESSION['loginedUsername'])) header("Location: login.php");
+    include("config.php");
+    $str_query = "select nama_depan, nama_tengah, nama_belakang from sl2_registration_data where username ='".$_SESSION['loginedUsername']."'"; 
+    $query = mysqli_query($connection, $str_query);
+    $row = mysqli_fetch_array($query);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -79,10 +87,18 @@
         </div>
         <div class="menus">
             <div class="home">
-                <a href="home.php" id="menu"><u>Home</u></a>
+                <a href="
+                    <?php
+                        echo "home.php?username=".$_SESSION['loginedUsername']."";
+                    ?>
+                " id="menu"><u>Home</u></a>
             </div>
             <div class="profile">
-                <a href="profile.php" id="menu">Profile</a>
+                <a href="
+                    <?php
+                        echo "profile.php?username=".$_SESSION['loginedUsername']."";
+                    ?>
+                " id="menu">Profile</a>
             </div>
         </div>
         <div class="logout">
@@ -90,7 +106,6 @@
         </div>
     </div>
     <?php
-        session_start();
         echo "<br>";
         echo "<br>";
         echo "<br>";
@@ -98,11 +113,11 @@
         echo "<br>";
         echo "<br>";
         echo "<br>";
-        echo "<P align=center>"."Halo "."<b>".$_SESSION['namaDepanRegister']." ".$_SESSION['namaTengahRegister']." ".$_SESSION['namaBelakangRegister']."</b>".", Selamat Datang di Aplikasi Pengelolaan Keuangan"."</p>";
+        echo "<P align=center>"."Halo "."<b>".$row['nama_depan']." ".$row['nama_tengah']." ".$row['nama_belakang']."</b>".", Selamat Datang di Aplikasi Pengelolaan Keuangan"."</p>";
         echo "<h5 align=center>&#9786 &#9786 &#9786</h5>";
     ?>
     <footer>
-        <p>2440092271<br>CHRIST GRACELIA ELLAINE<br><br>Copyright &copy Web Programming - SL 1</p>
+        <p>2440092271<br>CHRIST GRACELIA ELLAINE<br><br>Copyright &copy Web Programming - SL 2</p>
     </footer>
 </body>
 </html>

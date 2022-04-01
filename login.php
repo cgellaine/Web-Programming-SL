@@ -1,5 +1,13 @@
-<?php
+<?php  
     session_start();
+    if(isset($_SESSION['loginedUsername'])) 
+    header("Location: home.php?username=".$_SESSION['loginedUsername']);
+    include("config.php"); 
+    $str_query = "select * from sl2_registration_data"; 
+    $query = mysqli_query($connection, $str_query);
+    if(mysqli_num_rows($query) == 0){
+        header("Location: register.php");
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">

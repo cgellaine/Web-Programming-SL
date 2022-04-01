@@ -1,5 +1,5 @@
 <?php
-    session_start();
+    session_start(); 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -76,37 +76,19 @@
     <div class="buttons">
         <a href="
             <?php
-                if(!isset($_SESSION['successfullyRegister'])){
-                    echo "register.php";
-                }
-                if(isset($_SESSION['successfullyLogin'])){
-                    echo "home.php";
-                }
-                if(isset($_SESSION['successfullyRegister']) && !isset($_SESSION['successfullyLogin'])){
+                if(!isset($_SESSION['successfullyLogin'])){
                     echo "login.php";
+                }
+                else{
+                    echo "home.php?username=".$_SESSION['loginedUsername']."";
                 }
             ?>
         ">
         <button id="LoginBtn">Login</button></a>
-        <a href="
-            <?php
-                if(isset($_SESSION['successfullyRegister'])){ 
-                    if(isset($_SESSION['successfullyLogin'])){
-                        echo "home.php";
-                    }
-                    else{
-                        echo "login.php";
-                    }
-                }
-                else{
-                    echo "register.php";
-                }
-            ?>   
-        ">
-        <button id="RegisterBtn">Register</button></a>
+        <a href="register.php"><button id="RegisterBtn">Register</button></a>
     </div>
     <footer>
-        <p>2440092271<br>CHRIST GRACELIA ELLAINE<br><br>Copyright &copy Web Programming - SL 1</p>
+        <p>2440092271<br>CHRIST GRACELIA ELLAINE<br><br>Copyright &copy Web Programming - SL 2</p>
     </footer>
 </body>
 </html>
